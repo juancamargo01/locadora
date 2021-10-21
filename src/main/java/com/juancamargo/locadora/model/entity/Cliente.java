@@ -1,5 +1,6 @@
 package com.juancamargo.locadora.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "TBL_CLIENTE")
 @Data
+@AllArgsConstructor
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;

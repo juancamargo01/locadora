@@ -1,6 +1,6 @@
 package com.juancamargo.locadora.controller;
 
-import com.juancamargo.locadora.model.entity.Filmes;
+import com.juancamargo.locadora.model.entity.Filme;
 import com.juancamargo.locadora.repository.FilmesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +19,13 @@ public class FilmesController {
 
 
     @GetMapping
-    public List<Filmes> buscaTodosFilmes(){
+    public List<Filme> buscaTodosFilmes(){
 
         return  filmesRepository.findAll();
     }
 
     @GetMapping(path = {"/id"})
-    public Filmes buscaFilmePorId(@PathVariable Long id){
+    public Filme buscaFilmePorId(@PathVariable Long id){
 
         return  filmesRepository.getById(id);
     }
@@ -33,7 +33,7 @@ public class FilmesController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> adicionarFilmes(@RequestBody Filmes filme){
+    public ResponseEntity<String> adicionarFilmes(@RequestBody Filme filme){
 
          filmesRepository.save(filme);
 
@@ -43,7 +43,7 @@ public class FilmesController {
     @DeleteMapping(path = "/{id}")
     public String excluirFilmePorId(@PathVariable Long id){
 
-        Optional<Filmes> filme = filmesRepository.findById(id);
+        Optional<Filme> filme = filmesRepository.findById(id);
         filmesRepository.deleteById(id);
         String mensage = "filme"+ filme.get().getNomeDoFilme() + "deletado com sucesso";
 

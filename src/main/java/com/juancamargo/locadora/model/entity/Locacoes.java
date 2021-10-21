@@ -29,7 +29,7 @@ public class Locacoes implements Serializable {
     @OneToMany
     @JoinColumn(name = "FILME_LOCACOES")
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
-    private List<Filmes> filme;
+    private List<Filme> filme;
 
     @Column(name = "DATA_INICIO_LOCACOES")
     private LocalDate dataInicioLocacao;

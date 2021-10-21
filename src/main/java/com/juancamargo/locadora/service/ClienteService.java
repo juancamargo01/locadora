@@ -1,57 +1,63 @@
 package com.juancamargo.locadora.service;
 
+import com.juancamargo.locadora.dto.ClienteDTO;
 import com.juancamargo.locadora.model.entity.Cliente;
-import com.juancamargo.locadora.model.entity.Filmes;
 import com.juancamargo.locadora.repository.ClienteRepositoty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import javax.validation.Valid;
+import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public class ClienteService {
 
     @Autowired
     ClienteRepositoty clienteRepositoty;
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
+
+    public ClienteDTO salvarCliente( ClienteDTO clienteDTO) {
+
+        Cliente cliente= clienteRepositoty.save(montaCliente(clienteDTO));
+
+        return new ClienteDTO(cliente.getId(),cliente.getNomeCompleto(),cliente.getIdade(),cliente.getEndereco());
     }
 
-    public ResponseEntity<String> salvarFilmes(@Valid Cliente filme){
-        clienteRepositoty.save(filme);
-        return ResponseEntity.ok("Cliente cadastrado com sucesso =>\" + cliente.toString()");
+    public Boolean deletarClientePeloId(Long id) {
+        try {
+           if( buscarClientePeloId(id) != null) {
+               clienteRepositoty.deleteById(id);
+               return true;
+           }
+        }catch (EmptyResultDataAccessException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public ResponseEntity<String> DeleteFilmePeloId(Long id){
-        clienteRepositoty.deleteById(id);
-        return ResponseEntity.ok("Cliente deletado com sucesso");
-    }
+    public Cliente buscarClientePeloId(Long id) {
+        Optional<Cliente> cliente = clienteRepositoty.findById(id);
 
-    public ResponseEntity<Filmes> buscarFilmePeloId(Long id){
-        clienteRepositoty.findAllById(id);
-
-        return ResponseEntity.ok();
-    }
-
-    public ResponseEntity<String> buscarTodosFilmes(List<Cliente> filme){
-
+        if (cliente.isPresent()) {
+            return clienteRepositoty.findById(id).get();
+        }
         return null;
+
     }
+
+    public List<Cliente> buscarTodosCliente(List<Cliente> cliente) {
+        return clienteRepositoty.findAll();
+    }
+    
+    public Cliente atualizarCiente (ClienteDTO clienteDTO){
+        salvarCliente(clienteDTO);
+
+    }
+
+    private Cliente montaCliente(ClienteDTO clienteDTO){
+
+        return new Cliente(clienteDTO.getId(),clienteDTO.getNomeCompleto(),clienteDTO.getIdade(),clienteDTO.getEndereco());
+    }
+
 
 }

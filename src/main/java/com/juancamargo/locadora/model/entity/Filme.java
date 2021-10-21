@@ -11,9 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "TBL_FILMES")
+@Table(name = "TBL_FILME")
 @Data
-public class Filmes implements Serializable {
+public class Filme implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
