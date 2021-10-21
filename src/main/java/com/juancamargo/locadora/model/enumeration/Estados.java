@@ -1,5 +1,7 @@
 package com.juancamargo.locadora.model.enumeration;
 
+
+
 public enum Estados {
     AC,
     AL,

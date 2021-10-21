@@ -1,9 +1,10 @@
 package com.juancamargo.locadora.controller;
 
 import com.juancamargo.locadora.model.entity.Filmes;
-import com.juancamargo.repository.FilmesRepository;
+import com.juancamargo.locadora.repository.FilmesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +31,13 @@ public class FilmesController {
     }
 
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Filmes adicionarFilmes(@RequestBody Filmes filme){
+    public ResponseEntity<String> adicionarFilmes(@RequestBody Filmes filme){
 
-        return filmesRepository.save(filme);
+         filmesRepository.save(filme);
+
+        return ResponseEntity.ok("Filme cadastrado com sucesso =>" + filme.toString());
     }
 
     @DeleteMapping(path = "/{id}")

@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,13 +19,16 @@ public class Filmes implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_FILMES")
+    @NotBlank(message = "Este Campo nao pode ser vazio")
     private  Long id ;
 
     @Column(name = "NOME_DO_DILME", length = 255)
+    @NotBlank(message = "Este Campo nao pode ser vazio")
     private String nomeDoFilme;
 
     @Column(name = "FILME_DATA_LANCAMENTO")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @NotBlank(message = "Este Campo nao pode ser vazio")
     private LocalDate dataLancamento;
 
     @Column(name = "NOTA_USUARIO")
@@ -36,9 +40,10 @@ public class Filmes implements Serializable {
     @Column(name = "ESTA_LOCADO")
     private Boolean estaLocado;
 
+
     @Column(name = "ATORES")
     @OneToMany
-    @JoinColumn(name = "TBL_FILMES")
+    @JoinColumn(name = "TBL_FILME")
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private List<Atores> ator;
 
