@@ -1,14 +1,11 @@
 package com.juancamargo.locadora.service;
 
-import com.juancamargo.locadora.dto.ClienteDTO;
-import com.juancamargo.locadora.model.entity.Cliente;
+import com.juancamargo.locadora.dto.FilmeDTO;
 import com.juancamargo.locadora.model.entity.Filme;
 import com.juancamargo.locadora.repository.FilmesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.ResponseEntity;
 
-import javax.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,16 +17,16 @@ public class FilmeService {
 
 
 
-    public ClienteDTO salvarFilme(ClienteDTO clienteDTO) {
+    public FilmeDTO salvarFilme(FilmeDTO filmeDTO) {
 
-        Cliente cliente= filmesRepository.save(montaFilme(clienteDTO));
+        Filme filme = filmesRepository.save(montaFilme(filmeDTO));
 
-        return new ClienteDTO(cliente.getId(),cliente.getNomeCompleto(),cliente.getIdade(),cliente.getEndereco());
+        return new FilmeDTO(filme.getId(),filme.getNomeDoFilme(),filme.getDataLancamento(),filme.getNotaDosUsuarios(),filme.getNotaDaCritica(),filme.getEstaLocado(),filme.getAtor());
     }
 
     public Boolean deletarFilmePeloId(Long id) {
         try {
-            if( buscarClientePeloId(id) != null) {
+            if( buscarFilmePeloId(id) != null) {
                 filmesRepository.deleteById(id);
                 return true;
             }
@@ -40,27 +37,27 @@ public class FilmeService {
         return null;
     }
 
-    public Cliente buscarFilmePeloId(Long id) {
-        Optional<Cliente> cliente = filmesRepository.findById(id);
+    public Filme buscarFilmePeloId(Long id) {
+        Optional<Filme> filme = filmesRepository.findById(id);
 
-        if (cliente.isPresent()) {
+        if (filme.isPresent()) {
             return filmesRepository.findById(id).get();
         }
         return null;
 
     }
 
-    public List<Cliente> buscarTodosFilmesList<Cliente> cliente) {
+    public List<Filme> buscarTodosFilmes(List<Filme> filme) {
         return filmesRepository.findAll();
     }
 
-    public ClienteDTO atualizarfilme (ClienteDTO clienteDTO){
-        return salvarCliente(clienteDTO);
+    public FilmeDTO atualizarfilme (FilmeDTO filmeDTO){
+        return salvarFilme(filmeDTO);
 
     }
 
-    private Cliente montaFilme(ClienteDTO clienteDTO){
+    private Filme montaFilme(FilmeDTO filmeDTO){
 
-        return new Cliente(clienteDTO.getId(),clienteDTO.getNomeCompleto(),clienteDTO.getIdade(),clienteDTO.getEndereco());
+        return new Filme(filmeDTO.getId(),filmeDTO.getNomeDoFilme(),filmeDTO.getDataLancamento(),filmeDTO.getNotaDosUsuarios(),filmeDTO.getNotaDaCritica(),filmeDTO.getEstaLocado(),filmeDTO.getAtor());
     }
 }

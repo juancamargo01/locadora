@@ -1,5 +1,6 @@
 package com.juancamargo.locadora.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_FILME")
 @Data
+@AllArgsConstructor
 public class Filme implements Serializable {
     private static final long serialVersionUID = 1L;
 
