@@ -1,20 +1,16 @@
 package com.juancamargo.locadora.controller;
 
+import com.juancamargo.locadora.dto.ClienteDTO;
 import com.juancamargo.locadora.model.entity.Cliente;
-import com.juancamargo.locadora.repository.ClienteRepositoty;
 import com.juancamargo.locadora.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/cliente")
@@ -24,23 +20,31 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public List<Cliente> buscaTodosClientes(){
+    public List<Cliente> buscaTodosClientes(List<Cliente> cliente){
+        List<Cliente> clientes = clienteService.buscarTodosCliente(cliente);
+        return clientes;
     }
 
     @GetMapping(path = {"/id"})
     public Cliente buscaClientePorId(@PathVariable Long id){
+       return clienteService.buscarClientePeloId(id);
 
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> adicionarcliente (@RequestBody  @Valid Cliente cliente){
+    public ResponseEntity<String> adicionarcliente (@RequestBody ClienteDTO cliente){
+        clienteService.salvarCliente(cliente);
+        return ResponseEntity.ok("Cliente Cadastrado");
 
     }
 
     @DeleteMapping(path = "/{id}")
-    public String excluirClientePorId(@PathVariable Long id){
+    public ResponseEntity<String> excluirClientePorId(@PathVariable Long id){
 
+           return clienteService.deletarClientePeloId(id) ?
+                   ResponseEntity.ok("Cliente deletado com Sucesso") :
+                   ResponseEntity.ok("Erro nao pode ser deletado");
     }
 
 }

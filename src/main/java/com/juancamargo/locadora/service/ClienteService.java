@@ -33,6 +33,7 @@ public class ClienteService {
             e.printStackTrace();
             return false;
         }
+        return null;
     }
 
     public Cliente buscarClientePeloId(Long id) {
@@ -49,8 +50,8 @@ public class ClienteService {
         return clienteRepositoty.findAll();
     }
     
-    public Cliente atualizarCiente (ClienteDTO clienteDTO){
-        salvarCliente(clienteDTO);
+    public ClienteDTO atualizarCiente (ClienteDTO clienteDTO){
+       return salvarCliente(clienteDTO);
 
     }
 
