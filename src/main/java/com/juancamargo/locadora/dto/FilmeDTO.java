@@ -1,6 +1,6 @@
 package com.juancamargo.locadora.dto;
 
-import com.juancamargo.locadora.model.entity.Atores;
+import com.juancamargo.locadora.model.entity.Ator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -24,6 +24,6 @@ public class FilmeDTO {
 
     private Boolean estaLocado;
 
-    private List<Atores> ator;
+    private List<Ator> ator;
 
 }

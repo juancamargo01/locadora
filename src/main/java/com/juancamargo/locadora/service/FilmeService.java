@@ -5,11 +5,13 @@ import com.juancamargo.locadora.model.entity.Filme;
 import com.juancamargo.locadora.repository.FilmesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FilmeService {
 
     @Autowired
@@ -21,7 +23,13 @@ public class FilmeService {
 
         Filme filme = filmesRepository.save(montaFilme(filmeDTO));
 
-        return new FilmeDTO(filme.getId(),filme.getNomeDoFilme(),filme.getDataLancamento(),filme.getNotaDosUsuarios(),filme.getNotaDaCritica(),filme.getEstaLocado(),filme.getAtor());
+        return new FilmeDTO(filme.getId(),
+                        filme.getNomeDoFilme(),
+                        filme.getDataLancamento(),
+                        filme.getNotaDosUsuarios(),
+                        filme.getNotaDaCritica(),
+                        filme.getEstaLocado(),
+                        filme.getAtor());
     }
 
     public Boolean deletarFilmePeloId(Long id) {
@@ -58,6 +66,12 @@ public class FilmeService {
 
     private Filme montaFilme(FilmeDTO filmeDTO){
 
-        return new Filme(filmeDTO.getId(),filmeDTO.getNomeDoFilme(),filmeDTO.getDataLancamento(),filmeDTO.getNotaDosUsuarios(),filmeDTO.getNotaDaCritica(),filmeDTO.getEstaLocado(),filmeDTO.getAtor());
+        return new Filme(filmeDTO.getId(),
+                        filmeDTO.getNomeDoFilme(),
+                        filmeDTO.getDataLancamento(),
+                        filmeDTO.getNotaDosUsuarios(),
+                        filmeDTO.getNotaDaCritica(),
+                        filmeDTO.getEstaLocado(),
+                        filmeDTO.getAtor());
     }
 }

@@ -30,7 +30,6 @@ public class Filme implements Serializable {
 
     @Column(name = "FILME_DATA_LANCAMENTO")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotBlank(message = "Este Campo nao pode ser vazio")
     private LocalDate dataLancamento;
 
     @Column(name = "NOTA_USUARIO")
@@ -47,6 +46,6 @@ public class Filme implements Serializable {
     @OneToMany
     @JoinColumn(name = "TBL_FILME")
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
-    private List<Atores> ator;
+    private List<Ator> ator;
 
 }

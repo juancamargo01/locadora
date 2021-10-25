@@ -5,11 +5,13 @@ import com.juancamargo.locadora.model.entity.Cliente;
 import com.juancamargo.locadora.repository.ClienteRepositoty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ClienteService {
 
     @Autowired
@@ -20,7 +22,10 @@ public class ClienteService {
 
         Cliente cliente= clienteRepositoty.save(montaCliente(clienteDTO));
 
-        return new ClienteDTO(cliente.getId(),cliente.getNomeCompleto(),cliente.getIdade(),cliente.getEndereco());
+        return new ClienteDTO(cliente.getId(),
+                            cliente.getNomeCompleto(),
+                            cliente.getIdade(),
+                            cliente.getEndereco());
     }
 
     public Boolean deletarClientePeloId(Long id) {
@@ -57,7 +62,10 @@ public class ClienteService {
 
     private Cliente montaCliente(ClienteDTO clienteDTO){
 
-        return new Cliente(clienteDTO.getId(),clienteDTO.getNomeCompleto(),clienteDTO.getIdade(),clienteDTO.getEndereco());
+        return new Cliente(clienteDTO.getId(),
+                        clienteDTO.getNomeCompleto(),
+                        clienteDTO.getIdade(),
+                        clienteDTO.getEndereco());
     }
 
 

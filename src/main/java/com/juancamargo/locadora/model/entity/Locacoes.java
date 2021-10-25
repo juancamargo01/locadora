@@ -1,5 +1,6 @@
 package com.juancamargo.locadora.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_LOCACOES")
 @Data
+@AllArgsConstructor
 public class Locacoes implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -42,4 +44,5 @@ public class Locacoes implements Serializable {
 
     @Column(name = "VALOR_TOTAL_LOCACOES")
     private BigDecimal valorLocacaoTotal;
+
 }

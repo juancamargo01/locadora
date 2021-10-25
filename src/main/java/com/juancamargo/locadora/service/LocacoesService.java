@@ -1,14 +1,17 @@
 package com.juancamargo.locadora.service;
 
+import com.juancamargo.locadora.dto.LocacaoDTO;
 import com.juancamargo.locadora.model.entity.Filme;
 import com.juancamargo.locadora.model.entity.Locacoes;
+import com.juancamargo.locadora.repository.FilmesRepository;
 import com.juancamargo.locadora.repository.LocacoesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocacoesService {
@@ -16,51 +19,91 @@ public class LocacoesService {
     @Autowired
     LocacoesRepository locacoesRepository;
 
+    FilmesRepository filmesRepository;
 
 
-    public ResponseEntity<String> salvarFilmes(Locacoes locacoes){
+
+    public LocacaoDTO salvarFilmes(LocacaoDTO locacaoDTO){
+        Locacoes locacoes =locacoesRepository.save(montaLocacao(locacaoDTO));
         locacoesRepository.save(locacoes);
-        return ResponseEntity.ok("Cliente cadastrado com sucesso =>\" + cliente.toString()");
+        return new LocacaoDTO(locacoes.getId(),
+                            locacoes.getCliente(),
+                            locacoes.getFilme(),
+                            locacoes.getDataInicioLocacao(),
+                            locacoes.getDataEntregaLocacao(),
+                            locacoes.getValorLocacaoDiaria(),
+                            locacoes.getValorLocacaoTotal());
     }
 
-    public ResponseEntity<String> DeleteFilmePeloId(Long id){
-        locacoesRepository.deleteById(id);
-        return ResponseEntity.ok("Cliente deletado com sucesso");
+    public Boolean DeleteLocacaoPeloId(Long id){
+        try {
+            if(buscarLocacaoPeloId(id) != null) {
+                locacoesRepository.deleteById(id);
+                return true;
+            }
+        }catch (EmptyResultDataAccessException e){
+            e.printStackTrace();
+            return false;
+        }
+        return null;
     }
 
-    public ResponseEntity<Filme> buscarFilmePeloId(Long id){
-        locacoesRepository.findAllById(id);
+    public Locacoes buscarLocacaoPeloId(Long id){
+        Optional<Locacoes> locacao = locacoesRepository.findById(id);
 
-        return ResponseEntity.;
+        if (locacao.isPresent()) {
+            return locacoesRepository.findById(id).get();
+        }
+        return null;
     }
 
-    public ResponseEntity<String> buscarTodosFilmes(List<Locacoes> locacoes){
+    public List<Locacoes> buscarTodosLocacoes(List<Locacoes> locacoes){
 
+        if(locacoesRepository != null){
+           return  locacoesRepository.findAll();
+
+        }
         return null;
     }
 
 
-
-
-
     public Boolean verificaSefilmeEstaDisponivel(Filme filme){
 
-        return filme.getEstaLocado();
+     return filme.getEstaLocado();
+    }
+
+    private Locacoes montaLocacao(LocacaoDTO locacaoDTO){
+
+        return new Locacoes(locacaoDTO.getId(),
+                locacaoDTO.getCliente(),
+                locacaoDTO.getFilme(),
+                locacaoDTO.getDataInicioLocacao(),
+                locacaoDTO.getDataEntregaLocacao(),
+                locacaoDTO.getValorLocacaoDiaria(),
+                locacaoDTO.getValorLocacaoTotal());
     }
 
 
-    //TODO implementar a devolução de um filme
-    /*public Locacoes locacoes devolvefilmeLocado(Locacoes locacoes, Long idFilme){
-        locacoes.getFilme(List<Filmes>filme);
 
-        return locacoesRepository;
-    }*/
+    public Boolean devolvefilmeLocado(Locacoes locacoes, Long idFilme){
+        if(locacoesRepository.getById(locacoes.getId()).getFilme().isEmpty()){
+            return false;
+        }
 
-    //TODO implementar se o cliente tem  filmes locados
-   /* public Locacoes verificaseClienteTemFilmes(Locacoes locacoes){
-        Long id = locacoes.getId();
-        return locacoesRepository.deleteById(id);
-    }*/
+        locacoesRepository.getById(locacoes.getId()).getFilme().remove(idFilme);
+
+        return true;
+    }
+
+    public Boolean locarNovoFilme(Locacoes locacoes, Filme idFilme){
+        if(verificaSefilmeEstaDisponivel(idFilme)){
+            locacoesRepository.getById(locacoes.getId()).getFilme().add(idFilme);
+            return true;
+        }
+        return false;
+    }
+
+
 
     public String verificaData(Locacoes locacoes){
         String message = "Data Valida";
