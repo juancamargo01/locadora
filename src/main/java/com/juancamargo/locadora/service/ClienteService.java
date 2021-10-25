@@ -51,7 +51,7 @@ public class ClienteService {
 
     }
 
-    public List<Cliente> buscarTodosCliente(List<Cliente> cliente) {
+    public List<Cliente> buscarTodosCliente() {
         return clienteRepositoty.findAll();
     }
     

@@ -1,51 +1,53 @@
 package com.juancamargo.locadora.controller;
 
+import com.juancamargo.locadora.dto.FilmeDTO;
 import com.juancamargo.locadora.model.entity.Filme;
-import com.juancamargo.locadora.repository.FilmesRepository;
+
+import com.juancamargo.locadora.service.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
-@RequestMapping("/atores")
+@RequestMapping("/locacoes")
 public class FilmesController {
 
     @Autowired
-    private FilmesRepository filmesRepository;
+    private FilmeService filmeService;
 
 
     @GetMapping
     public List<Filme> buscaTodosFilmes(){
 
-        return  filmesRepository.findAll();
+        return  filmeService.buscarTodosFilmes();
     }
 
     @GetMapping(path = {"/id"})
     public Filme buscaFilmePorId(@PathVariable Long id){
 
-        return  filmesRepository.getById(id);
+        return  filmeService.buscarFilmePeloId(id);
     }
 
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> adicionarFilmes(@RequestBody Filme filme){
+    public ResponseEntity<String> adicionarFilmes(@RequestBody FilmeDTO filmeDTO){
 
-         filmesRepository.save(filme);
+         filmeService.salvarFilme(filmeDTO);
 
-        return ResponseEntity.ok("Filme cadastrado com sucesso =>" + filme.toString());
+        return ResponseEntity.ok("Filme cadastrado com sucesso =>" + filmeDTO.toString());
     }
 
     @DeleteMapping(path = "/{id}")
     public String excluirFilmePorId(@PathVariable Long id){
 
-        Optional<Filme> filme = filmesRepository.findById(id);
-        filmesRepository.deleteById(id);
-        String mensage = "filme"+ filme.get().getNomeDoFilme() + "deletado com sucesso";
+        Filme filme = filmeService.buscarFilmePeloId(id);
+        filmeService.deletarFilmePeloId(id);
+        String mensage = "filme"+ filme.getNomeDoFilme() + "deletado com sucesso";
 
         return mensage ;
     }

@@ -4,6 +4,7 @@ import com.juancamargo.locadora.model.entity.Cliente;
 import com.juancamargo.locadora.model.entity.Filme;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LocacaoDTO {
 
     private  Long id ;

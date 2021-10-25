@@ -3,6 +3,7 @@ package com.juancamargo.locadora.model.entity;
 import com.juancamargo.locadora.model.enumeration.Estados;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Table(name = "TBL_ENDERECO")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -17,6 +17,9 @@ public class FilmeService {
     @Autowired
     FilmesRepository filmesRepository;
 
+    public List<Filme> buscarTodosFilmes() {
+        return filmesRepository.findAll();
+    }
 
 
     public FilmeDTO salvarFilme(FilmeDTO filmeDTO) {
@@ -74,4 +77,6 @@ public class FilmeService {
                         filmeDTO.getEstaLocado(),
                         filmeDTO.getAtor());
     }
+
+
 }

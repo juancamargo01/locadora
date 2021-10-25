@@ -20,9 +20,8 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public List<Cliente> buscaTodosClientes(List<Cliente> cliente){
-        List<Cliente> clientes = clienteService.buscarTodosCliente(cliente);
-        return clientes;
+    public List<Cliente> buscaTodosClientes(){
+        return clienteService.buscarTodosCliente();
     }
 
     @GetMapping(path = {"/id"})

@@ -2,6 +2,7 @@ package com.juancamargo.locadora.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Table(name = "TBL_ATORES")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Ator implements Serializable {
 
     private static final long serialVersionUID = 1L;
