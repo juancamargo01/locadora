@@ -1,16 +1,14 @@
 package com.juancamargo.locadora.service;
 
 
-import com.juancamargo.locadora.model.entity.Ator;
-import com.juancamargo.locadora.model.entity.Cliente;
-import com.juancamargo.locadora.model.entity.Endereco;
-import com.juancamargo.locadora.model.entity.Filme;
+import com.juancamargo.locadora.model.entity.*;
 
 import com.juancamargo.locadora.model.enumeration.Estados;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
@@ -48,6 +46,22 @@ class LocacoesServiceTest {
         return cliente;
     }
 
+    private Locacoes locacoesMockito(){
+        LocalDate data ;
+        data = LocalDate.of(2019,10,2);
+        List<Filme>filme = (List<Filme>) new Filme();
+        filme.add(filmeMock());
+        Cliente cliente = clienteMock();
+        BigDecimal valorFixo = new BigDecimal(2.0);
+        Locacoes locacoes = new Locacoes(1L,cliente,filme,
+                LocalDate.of(2019,10,2),
+                LocalDate.of(2019,10,5),
+                valorFixo,null);
+
+        return locacoes;
+
+    }
+
 
     @Test
     void verificaSefilmeEstaDisponivelTeste() {
@@ -60,6 +74,11 @@ class LocacoesServiceTest {
 
     @Test
     void devolvefilmeLocadoteste() {
+        Locacoes locacoes = locacoesMockito();
+        locacoesService.devolvefilmeLocado(locacoes,1L);
+        boolean foiDevolvido = locacoes.getFilme().isEmpty();
+        assertEquals(true, foiDevolvido);
+
     }
 
     @Test
