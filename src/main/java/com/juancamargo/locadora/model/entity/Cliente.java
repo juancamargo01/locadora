@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
     private  Long id ;
 
     @Size(min = 2, max = 255, message = "Deve conter entre 2 e 255 caracteres")
-    @Column(name = "NOME_COMPLETO_CLIENTE", length = 255)
+    @Column(name = "NOME_COMPLETO_CLIENTE")
     @NotBlank(message = "Este Campo nao pode ser vazio")
     private String nomeCompleto;
 

@@ -49,6 +49,7 @@ class LocacoesServiceTest {
     private Locacoes locacoesMockito(){
         LocalDate data ;
         data = LocalDate.of(2019,10,2);
+
         List<Filme>filme = (List<Filme>) new Filme();
         filme.add(filmeMock());
         Cliente cliente = clienteMock();
@@ -57,9 +58,7 @@ class LocacoesServiceTest {
                 LocalDate.of(2019,10,2),
                 LocalDate.of(2019,10,5),
                 valorFixo,null);
-
         return locacoes;
-
     }
 
 

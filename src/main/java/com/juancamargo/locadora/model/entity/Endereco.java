@@ -25,8 +25,8 @@ public class Endereco implements Serializable {
     @Column(name = "ID_ENDERECO")
     private  Long id ;
 
-    @Size(min = 2,max = 2, message = "Sigla UF deve conter uma sigla com no maximo 2 caracteres e no minimo 2 caracteres")
-    @Column(name = "ESTADO_ENDERECO", length = 2)
+
+    @Column(name = "ESTADO_ENDERECO")
     @Enumerated(EnumType.STRING)
     private Estados estado;
 
@@ -41,13 +41,9 @@ public class Endereco implements Serializable {
 
     @Column(name = "NUMERO_ENDERECO")
     @NotBlank(message = "Este Campo nao pode ser vazio")
-    @Size(min = 1, max = 10, message = "Deve conter entre 1 e 10 caracteres")
-    @Pattern(regexp = "^[0-9]",message ="Deve conter apenas numeros" )
     private String numero;
 
     @Column(name = "CEP_ENDERECO")
     @NotBlank(message = "Este Campo nao pode ser vazio")
-    @Size(min = 8, max = 8, message = "Deve conter 8 caracateres somente numeros")
-    @Pattern(regexp = "^[0-9]",message ="Deve conter apenas numeros" )
     private String cep;
 }

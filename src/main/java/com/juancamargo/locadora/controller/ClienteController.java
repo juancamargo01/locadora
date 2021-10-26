@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> adicionarcliente (@RequestBody ClienteDTO cliente){
+    public ResponseEntity<String> adicionarcliente ( @RequestBody @Valid ClienteDTO cliente){
         clienteService.salvarCliente(cliente);
         return ResponseEntity.ok("Cliente Cadastrado");
 
