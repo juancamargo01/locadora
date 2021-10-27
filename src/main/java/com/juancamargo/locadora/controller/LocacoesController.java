@@ -1,9 +1,7 @@
 package com.juancamargo.locadora.controller;
 
-import com.juancamargo.locadora.dto.ClienteDTO;
 import com.juancamargo.locadora.dto.LocacaoDTO;
 import com.juancamargo.locadora.model.entity.Locacoes;
-import com.juancamargo.locadora.repository.LocacoesRepository;
 import com.juancamargo.locadora.service.LocacoesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
