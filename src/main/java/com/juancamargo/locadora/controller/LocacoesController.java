@@ -1,47 +1,58 @@
 package com.juancamargo.locadora.controller;
 
+import com.juancamargo.locadora.dto.ClienteDTO;
+import com.juancamargo.locadora.dto.LocacaoDTO;
 import com.juancamargo.locadora.model.entity.Locacoes;
 import com.juancamargo.locadora.repository.LocacoesRepository;
+import com.juancamargo.locadora.service.LocacoesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/locacoes")
 public class LocacoesController {
 
     @Autowired
-    private LocacoesRepository locacoesRepository;
+    private LocacoesService locacoesService;
 
     @GetMapping
     public List<Locacoes> buscaTodosLocacoes(){
 
-        return  locacoesRepository.findAll();
+        return  locacoesService.buscarTodosLocacoes();
     }
 
     @GetMapping(path = {"/id"})
     public Locacoes buscalocacaoPorId(@PathVariable Long id){
 
-        return  locacoesRepository.getById(id);
+        return  locacoesService.buscarLocacaoPeloId(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> adicionarLocacao(@RequestBody Locacoes locacao){
+    public ResponseEntity<String> adicionarLocacao(@RequestBody LocacaoDTO locacaoDTO){
 
-         locacoesRepository.save(locacao);
-        return ResponseEntity.ok("Filme cadastrado com sucesso =>" + locacao.toString());
+        locacoesService.salvarLocacao(locacaoDTO);
+        return ResponseEntity.ok("Filme cadastrado com sucesso =>" + locacaoDTO.toString());
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<String> atualizarLocacao( @PathVariable Long id ,@RequestBody @Valid LocacaoDTO locacaoDTO){
+        locacoesService.atualizarLocacao(locacaoDTO,id);
+        return ResponseEntity.ok("Cliente Atualizado");
+
     }
 
     @DeleteMapping(path = "/{id}")
     public String excluirLocacaoPorId(@PathVariable Long id){
 
-        Optional<Locacoes> locacao = locacoesRepository.findById(id);
-        locacoesRepository.deleteById(id);
+        Locacoes locacao = locacoesService.buscarLocacaoPeloId(id);
+        locacoesService.DeleteLocacaoPeloId(id);
         String mensage = "filme"+ locacao + "deletado com sucesso";
 
         return mensage ;

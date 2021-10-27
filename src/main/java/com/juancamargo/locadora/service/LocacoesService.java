@@ -23,7 +23,7 @@ public class LocacoesService {
 
 
 
-    public LocacaoDTO salvarFilmes(LocacaoDTO locacaoDTO){
+    public LocacaoDTO salvarLocacao(LocacaoDTO locacaoDTO){
         Locacoes locacoes =locacoesRepository.save(montaLocacao(locacaoDTO));
         locacoesRepository.save(locacoes);
         return new LocacaoDTO(locacoes.getId(),
@@ -57,7 +57,7 @@ public class LocacoesService {
         return null;
     }
 
-    public List<Locacoes> buscarTodosLocacoes(List<Locacoes> locacoes){
+    public List<Locacoes> buscarTodosLocacoes(){
 
         if(locacoesRepository != null){
            return  locacoesRepository.findAll();
@@ -81,6 +81,25 @@ public class LocacoesService {
                 locacaoDTO.getDataEntregaLocacao(),
                 locacaoDTO.getValorLocacaoDiaria(),
                 locacaoDTO.getValorLocacaoTotal());
+    }
+
+    public LocacaoDTO atualizarLocacao(LocacaoDTO locacaoDTO, Long id) {
+        Locacoes novaLocacao = buscarLocacaoPeloId(id);
+        novaLocacao.setCliente(locacaoDTO.getCliente());
+        novaLocacao.setFilme(locacaoDTO.getFilme());
+        novaLocacao.setDataInicioLocacao(locacaoDTO.getDataInicioLocacao());
+        novaLocacao.setDataEntregaLocacao(locacaoDTO.getDataEntregaLocacao());
+        novaLocacao.setValorLocacaoTotal(locacaoDTO.getValorLocacaoTotal());
+
+        Locacoes locacoes= locacoesRepository.save(novaLocacao);
+
+        return new LocacaoDTO(novaLocacao.getId(),
+                novaLocacao.getCliente(),
+                novaLocacao.getFilme(),
+                novaLocacao.getDataInicioLocacao(),
+                novaLocacao.getDataEntregaLocacao(),
+                novaLocacao.getValorLocacaoDiaria(),
+                novaLocacao.getValorLocacaoTotal());
     }
 
 

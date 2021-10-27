@@ -1,5 +1,6 @@
 package com.juancamargo.locadora.controller;
 
+import com.juancamargo.locadora.dto.ClienteDTO;
 import com.juancamargo.locadora.dto.FilmeDTO;
 import com.juancamargo.locadora.model.entity.Filme;
 
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -40,6 +42,13 @@ public class FilmesController {
          filmeService.salvarFilme(filmeDTO);
 
         return ResponseEntity.ok("Filme cadastrado com sucesso =>" + filmeDTO.toString());
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<String> atualizarFilme ( @PathVariable Long id ,@RequestBody @Valid FilmeDTO filmeDTO){
+        filmeService.atualizarFilme(filmeDTO,id);
+        return ResponseEntity.ok("Cliente Atualizado");
+
     }
 
     @DeleteMapping(path = "/{id}")

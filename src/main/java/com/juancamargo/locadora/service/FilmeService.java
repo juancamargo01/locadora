@@ -1,6 +1,8 @@
 package com.juancamargo.locadora.service;
 
+import com.juancamargo.locadora.dto.ClienteDTO;
 import com.juancamargo.locadora.dto.FilmeDTO;
+import com.juancamargo.locadora.model.entity.Cliente;
 import com.juancamargo.locadora.model.entity.Filme;
 import com.juancamargo.locadora.repository.FilmesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,26 @@ public class FilmeService {
                         filme.getNotaDaCritica(),
                         filme.getEstaLocado(),
                         filme.getAtor());
+    }
+
+    public FilmeDTO atualizarFilme(FilmeDTO filmeDTO, Long id) {
+        Filme novoFilme = buscarFilmePeloId(id);
+        novoFilme.setNomeDoFilme(filmeDTO.getNomeDoFilme());
+        novoFilme.setDataLancamento(filmeDTO.getDataLancamento());
+        novoFilme.setNotaDosUsuarios(filmeDTO.getNotaDosUsuarios());
+        novoFilme.setNotaDaCritica(filmeDTO.getNotaDaCritica());
+        novoFilme.setEstaLocado(filmeDTO.getEstaLocado());
+        novoFilme.setAtor(filmeDTO.getAtor());
+
+        Filme filme= filmesRepository.save(novoFilme);
+
+        return new FilmeDTO(novoFilme.getId(),
+                novoFilme.getNomeDoFilme(),
+                novoFilme.getDataLancamento(),
+                novoFilme.getNotaDosUsuarios(),
+                novoFilme.getNotaDaCritica(),
+                novoFilme.getEstaLocado(),
+                novoFilme.getAtor());
     }
 
     public Boolean deletarFilmePeloId(Long id) {
