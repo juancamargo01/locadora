@@ -42,13 +42,13 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> adicionarcliente ( @RequestBody @Valid ClienteDTO cliente){
+    public ResponseEntity<String> adicionarcliente ( @Valid @RequestBody  ClienteDTO cliente){
         clienteService.salvarCliente(cliente);
         return ResponseEntity.ok("Cliente Cadastrado");
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<String> atualizarCliente ( @PathVariable Long id ,@RequestBody @Valid ClienteDTO clienteDTO){
+    public ResponseEntity<String> atualizarCliente ( @PathVariable Long id , @Valid @RequestBody  ClienteDTO clienteDTO){
         clienteService.atualizarCliente(clienteDTO,id);
         return ResponseEntity.ok("Cliente Atualizado");
     }

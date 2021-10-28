@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class FilmeDTO {
 
     private Long id;
 
+    @NotBlank(message = "Este Campo nao pode ser vazio")
+    @Size(min = 2, max = 255, message = "Deve conter entre 2 e 255 caracteres")
     private String nomeDoFilme;
 
     private LocalDate dataLancamento;

@@ -25,15 +25,11 @@ public class Cliente implements Serializable {
     @Column(name = "ID_CLIENTE")
     private  Long id ;
 
-    @Size(min = 2, max = 255, message = "Deve conter entre 2 e 255 caracteres")
     @Column(name = "NOME_COMPLETO_CLIENTE")
-    @NotBlank(message = "Este Campo nao pode ser vazio")
     private String nomeCompleto;
 
-    @NotNull(message = "Não pode ser nulo")
     @Column(name = "IDADE_CLIENTE")
     private Integer idade;
-
 
     @OneToOne
     @JoinColumn(name = "ENDERECO_CLIENTE")

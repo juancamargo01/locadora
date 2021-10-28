@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,11 +24,11 @@ public class Filme implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_FILMES")
-    @NotBlank(message = "Este Campo nao pode ser vazio")
     private  Long id ;
 
-    @Column(name = "NOME_DO_DILME", length = 255)
-    @NotBlank(message = "Este Campo nao pode ser vazio")
+    @Column(name = "NOME_DO_DILME")
+    @Size(min = 2, max = 255, message = "Deve conter entre 2 e 255 caracteres")
+
     private String nomeDoFilme;
 
     @Column(name = "FILME_DATA_LANCAMENTO")
